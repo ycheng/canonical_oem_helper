@@ -1,10 +1,10 @@
 // ==UserScript==
 // @name         Launchpad bug tags helper
 // @namespace    https://launchpad.net/~julian-liu
-// @version      3.1
+// @version      3.2
 // @license      MIT
 // @description  LP bugs tags helper
-// @author       Julian Liu, YC Cheng
+// @author       Julian Liu, YC Cheng, Jason Lo
 // @match        https://bugs.launchpad.net/*/+filebug
 // @match        https://bugs.launchpad.net/*/+bug/*
 // @match        https://*.launchpad.net/~oem-solutions-engineers/+branches*
