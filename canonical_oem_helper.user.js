@@ -202,10 +202,9 @@ function tagList(formId, tagElement, targetNode) {
     // ?q= to avoid cache
     var extTagUrl = 'https://cedelivery.access.ly/tag.json?q=';
     var intTagurl = 'https://bugs.launchpad.net/somerville/+bug/1713956?q=';
-    var pubTags = {
-        ihv: ['ihv-amd', 'ihv-broadcom', 'ihv-intel', 'ihv-nvidia', 'ihv-realtek', 'ihv-qualcomm', 'ihv-emulex', 'ihv-alps', 'ihv-synaptics', 'ihv-unknown'],
-        status: ['bios-issue', 'task', 'staging', 'waiting', 'cqa-verified', 'not-fixed-at-gm', 'oem-no-hw']
-    };
+    var pubTagurl = 'https://bugs.launchpad.net/lyoncore/+bug/1927308?q=';
+    //var qaTagurl = 'https://git.launchpad.net/qabro/tree/qabro/data/tags.json?q=';
+    
     var tagDiv = document.createElement('div');
     tagDiv.id = 'wrap';
     var ulLevel1 = document.createElement('ul');
@@ -237,7 +236,20 @@ function tagList(formId, tagElement, targetNode) {
     }
 
     insertAfter(tagDiv, targetNode);
-    appendCategory(pubTags);
+
+    //var json_obj = JSON.parse(Get(qaTagurl));
+    //console.log("this is the author name: "+json_obj);
+
+    loadBugDescription(pubTagurl, function(text){
+        console.log('QA tag data loaded');
+        var data = JSON.parse(text);
+        for (var keyname in data.tags) {
+            data.tags[keyname].sort();
+        }
+        appendCategory(data.tags);
+    });
+    
+    
     addTagStyle();
 
     loadBugDescription(intTagurl, function(text){
@@ -250,6 +262,13 @@ function tagList(formId, tagElement, targetNode) {
         loadPlatformPlan(data.plan, data.owner);
     });
 }
+
+//function Get(yourUrl){
+//    var Httpreq = new XMLHttpRequest(); // a new request
+//    Httpreq.open("GET",yourUrl,false);
+//    Httpreq.send(null);
+//    return Httpreq.responseText;
+//}
 
 function loadExtHtml(url, callback) {
     var ajaxReq = new XMLHttpRequest();
